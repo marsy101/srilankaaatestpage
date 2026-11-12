@@ -117,7 +117,8 @@ footer .wrap{padding-block:26px 40px;display:flex;flex-direction:column;gap:8px}
 /* header: brand on top, then menu with language button pinned at the right of the same row, identical in both languages */
 header.site .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand brand" "nav lang";align-items:center;gap:10px 16px}
 header.site .brand{grid-area:brand}
-header.site nav{grid-area:nav;min-width:0}
+header.site nav{grid-area:nav;min-width:0;display:flex;justify-content:space-between;gap:8px;padding-right:clamp(16px,6vw,96px)}
+@media (min-width:701px){header.site nav a{font-size:1.05rem;padding:8px 16px}}
 header.site .langsw{grid-area:lang;align-self:start}
 .brand b,.brand span{white-space:nowrap}
 .bounce{display:inline-block;animation:nudge 5s ease-in-out 2s infinite}
