@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>AA Sri Lanka Website</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Noto+Sans+Sinhala:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap">
+<style>
+/* Layout: one calm reading column (~68ch) with a persistent helpline strip; the meeting finder widens to a two-column grid on desktop. */
+:root{
+  --bg:#F3F6F5; --surface:#FFFFFF; --ink:#16262A; --muted:#566A6E; --line:#D7E0DF;
+  --accent:#0E6467; --accent-soft:#DCEDEC; --warm:#C8691C; --warm-soft:#FBEBDD;
+  --now:#1F7A3D; --now-soft:#DDF1E3;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-local:"Noto Sans Sinhala","Noto Sans Tamil", system-ui, sans-serif;
+  --r:10px; color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--warm);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5.5vw,3.1rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.55rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:700}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.read{max-width:68ch}
+.proto{background:var(--warm-soft);color:var(--ink);font-size:.85rem}
+.proto .wrap{padding-block:6px}
+/* helpline strip */
+.help{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);color:var(--bg)}
+.help .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-block:8px;font-size:.95rem}
+.help strong{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.02em}
+.help a{color:var(--bg)}
+.help .copy{background:transparent;color:var(--bg);border:1px solid color-mix(in srgb,var(--bg) 45%,transparent)}
+header.site .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:18px}
+.brand{display:flex;flex-direction:column;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-display);font-size:1.3rem}
+.brand span{font-size:.82rem;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:4px}
+nav a{text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:999px;font-size:.95rem}
+nav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:700}
+main{padding-block:12px 56px}
+section.view{display:flex;flex-direction:column;gap:28px}
+.lead{font-size:1.2rem;color:var(--ink)}
+.muted{color:var(--muted)}
+.greet{font-family:var(--f-local);color:var(--muted);font-size:1rem;display:flex;gap:14px;flex-wrap:wrap}
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.path{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color .15s}
+.path:hover{border-color:var(--accent)}
+.path h3{color:var(--accent)}
+.path .go{margin-top:auto;font-weight:700;color:var(--accent)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;border-top:1px solid var(--line);padding-top:22px}
+.facts div{display:flex;flex-direction:column;gap:2px}
+.facts b{font-family:var(--f-display);font-size:1.05rem}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:var(--surface);font:700 .95rem var(--f-body);cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+.copy{font:700 .78rem var(--f-body);padding:3px 10px;border-radius:999px;cursor:pointer;background:var(--surface);color:var(--accent);border:1px solid var(--line)}
+/* finder */
+.finder{display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.finder{grid-template-columns:minmax(0,1fr)}}
+.filters{display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px)}
+@media (max-width:820px){.filters{position:static}}
+.fgroup{display:flex;flex-direction:column;gap:8px}
+.fgroup label.h{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 11px;border-radius:999px;font:.9rem var(--f-body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:700}
+select{font:1rem var(--f-body);padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+.count{font-size:.9rem;color:var(--muted)}
+.daygroup{display:flex;flex-direction:column;gap:10px}
+.daygroup + .daygroup{margin-top:22px}
+.dayhead{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.dayhead h3{font-size:1.25rem}
+.dayhead span{font-size:.85rem;color:var(--muted)}
+.mtg{display:grid;grid-template-columns:86px minmax(0,1fr);gap:4px 16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.mtg .time{font-family:var(--f-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums;line-height:1.3}
+.mtg .time small{display:block;font:400 .8rem var(--f-body);color:var(--muted)}
+.mtg .body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mtg .name{font-weight:700;font-size:1.05rem}
+.mtg .where{color:var(--muted);font-size:.95rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.tag{font-size:.78rem;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700}
+.tag.zoom{background:var(--warm-soft);color:var(--warm)}
+.tag.now{background:var(--now-soft);color:var(--now)}
+.call{font-size:.92rem;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.empty{padding:28px;border:1px dashed var(--line);border-radius:var(--r);color:var(--muted)}
+/* reading pages */
+.prose{display:flex;flex-direction:column;gap:14px}
+.prose h2{margin-top:18px}
+.prose p,.prose ul{margin:0}
+.qa{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+.callout{background:var(--accent-soft);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.safety{background:var(--warm-soft);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.safety table{border-collapse:collapse;width:100%;font-size:.95rem}
+.safety td{padding:6px 0;border-bottom:1px solid color-mix(in srgb,var(--warm) 25%,transparent);vertical-align:top}
+.safety td:last-child{text-align:right;font-family:var(--f-display);font-weight:700;white-space:nowrap;padding-left:12px}
+.own{border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:8px;background:var(--surface)}
+.own .h{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.own ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.own li span{color:var(--muted);font-size:.88rem}
+a.out::after{content:" ↗";font-size:.85em}
+blockquote{margin:0;padding:4px 0 4px 16px;border-left:3px solid var(--accent);font-size:1.05rem}
+.credit{font-size:.8rem;color:var(--muted)}
+.preamble{display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.verify{font-size:.75rem;font-weight:700;color:var(--warm);text-transform:uppercase;letter-spacing:.06em}
+footer{border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+footer .wrap{padding-block:26px 40px;display:flex;flex-direction:column;gap:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+[hidden]{display:none!important}
+/* header: brand on top, then menu with language button pinned at the right of the same row, identical in both languages */
+header.site .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand brand" "nav lang";align-items:center;gap:10px 16px}
+header.site .brand{grid-area:brand}
+header.site nav{grid-area:nav;min-width:0}
+header.site .langsw{grid-area:lang;align-self:start}
+@media (max-width:700px){header.site .wrap{grid-template-areas:"brand lang" "nav nav"}header.site .langsw{align-self:center}.langsw button{padding:6px 10px;font-size:.88rem}}
+/* bilingual */
+html:not([data-lang="si"]) [data-l="si"], html:not([data-lang="ta"]) [data-l="ta"], html:not([data-lang="en"]) [data-l="en"]{display:none!important}
+html[data-lang="ta"] body{font-family:"Noto Sans Tamil", var(--f-body);line-height:1.75}
+html[data-lang="ta"] h1, html[data-lang="ta"] h2, html[data-lang="ta"] h3, html[data-lang="ta"] .big-sm{font-family:"Noto Sans Tamil", var(--f-display);line-height:1.4}
+html[data-lang="ta"] h1{font-size:clamp(1.6rem,4.3vw,2.4rem)}
+.langsw{display:inline-flex;border:2px solid var(--accent);border-radius:999px;overflow:hidden;background:var(--surface)}
+.langsw button{border:0;background:transparent;color:var(--accent);padding:7px 14px;font:700 .95rem var(--f-body);cursor:pointer}
+.langsw button[lang="si"]{font-family:"Noto Sans Sinhala",var(--f-body)}
+.langsw button[lang="ta"]{font-family:"Noto Sans Tamil",var(--f-body)}
+.langsw button + button{border-left:1px solid var(--line)}
+.langsw button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+html[data-lang="si"] body{font-family:"Noto Sans Sinhala", var(--f-body);line-height:1.75}
+html[data-lang="si"] h1, html[data-lang="si"] h2, html[data-lang="si"] h3, html[data-lang="si"] .help strong{font-family:"Noto Sans Sinhala", var(--f-display);line-height:1.35}
+html[data-lang="si"] h1{font-size:clamp(1.7rem,4.6vw,2.6rem)}
+[lang="en"]{font-family:var(--f-body)}
+.langbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font:700 1rem "Noto Sans Sinhala", var(--f-body);cursor:pointer}
+.langbtn:hover{background:var(--accent);color:var(--surface)}
+.langbtn::before{content:"";width:16px;height:16px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18'/%3E%3C/svg%3E") center/contain no-repeat}
+.big{font-family:var(--f-display);font-size:1.6rem}
+.big-sm{font-family:var(--f-display);font-size:1.25rem}
+html[data-lang="si"] .big-sm{font-family:"Noto Sans Sinhala", var(--f-display)}
+</style>
+</head>
+<body>
+
+
+<div class="proto"><div class="wrap">
+  <span data-l="en">Prototype for intergroup review. All wording needs group conscience approval, and meeting details are still being confirmed with each group.</span>
+  <span data-l="si">මෙය අන්තර් කණ්ඩායමේ සමාලෝචනය සඳහා වන මූලාකෘතියකි. සියලු වචන කණ්ඩායම් හෘදය සාක්ෂියේ අනුමැතිය ලැබිය යුතු අතර, රැස්වීම් විස්තර තවමත් තහවුරු කරමින් පවතී. සිංහල පරිවර්තනය සිංහල කතා කරන සාමාජිකයෙකු විසින් සමාලෝචනය කළ යුතුය.</span><span data-l="ta">இது இன்டர்குரூப் மதிப்பாய்வுக்கான முன்மாதிரி மட்டுமே. அனைத்து வாசகங்களுக்கும் குழு மனசாட்சியின் ஒப்புதல் தேவை; கூட்ட விபரங்கள் இன்னும் உறுதிப்படுத்தப்படுகின்றன. தமிழ் மொழிபெயர்ப்பை தமிழ் பேசும் ஒரு உறுப்பினர் சரிபார்க்க வேண்டும்.</span>
+</div></div>
+
+<div class="help" role="region" aria-label="Helpline"><div class="wrap">
+  <span data-l="en">Want to talk to someone now?</span>
+  <span data-l="si">දැන්ම කෙනෙකු සමඟ කතා කරන්න අවශ්‍යද?</span><span data-l="ta">இப்போதே யாருடனாவது பேச வேண்டுமா?</span>
+  <strong>+94 72 786 0860</strong>
+  <a href="tel:+94727860860"><span data-l="en">Call</span><span data-l="si">අමතන්න</span><span data-l="ta">அழையுங்கள்</span></a>
+  <button class="copy" data-copy="+94 72 786 0860" data-label-en="Copy number" data-label-si="අංකය පිටපත් කරන්න" data-label-ta="இலக்கத்தை நகலெடுக்க"></button>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="#home"><b>AA Sri Lanka</b><span>Alcoholics Anonymous · The Turning Point</span></a>
+  <nav aria-label="Main">
+    <a href="#home"><span data-l="en">Home</span><span data-l="si">මුල් පිටුව</span><span data-l="ta">முகப்பு</span></a>
+    <a href="#meetings"><span data-l="en">Meetings</span><span data-l="si">රැස්වීම්</span><span data-l="ta">கூட்டங்கள்</span></a>
+    <a href="#first-meeting"><span data-l="en">First meeting</span><span data-l="si">පළමු රැස්වීම</span><span data-l="ta">முதல் கூட்டம்</span></a>
+    <a href="#families"><span data-l="en">Families</span><span data-l="si">පවුල් සඳහා</span><span data-l="ta">குடும்பங்களுக்கு</span></a>
+    <a href="#contact"><span data-l="en">Contact</span><span data-l="si">අප අමතන්න</span><span data-l="ta">தொடர்புகொள்ள</span></a>
+  </nav>
+  <div class="langsw" role="group" aria-label="Language"><button type="button" data-setlang="en" lang="en">English</button><button type="button" data-setlang="si" lang="si">සිංහල</button><button type="button" data-setlang="ta" lang="ta">தமிழ்</button></div>
+</div></header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<section class="view" id="v-home">
+  <div class="read" style="display:flex;flex-direction:column;gap:14px;padding-top:14px">
+    <p class="greet"><span>Welcome</span><span>ආයුබෝවන්</span><span>வணக்கம்</span></p>
+    <h1><span data-l="en">If drinking is causing you problems, you don't have to sort it out alone.</span><span data-l="si">මත්පැන් පානය ඔබට ගැටලු ඇති කරනවා නම්, එය තනිවම විසඳා ගන්න අවශ්‍ය නැහැ.</span><span data-l="ta">குடிப்பழக்கம் உங்களுக்குப் பிரச்சினைகளை ஏற்படுத்தினால், அதைத் தனியாகச் சமாளிக்க வேண்டியதில்லை.</span></h1>
+    <p class="lead" data-l="en">Alcoholics Anonymous meets every week across Sri Lanka, in English, Sinhala and Tamil. It's free, nobody takes your name, and you don't have to speak.</p>
+    <p class="lead" data-l="si">Alcoholics Anonymous (AA) රැස්වීම් ශ්‍රී ලංකාව පුරා සෑම සතියකම සිංහල, දෙමළ සහ ඉංග්‍රීසි භාෂාවලින් පැවැත්වෙනවා. එය නොමිලේ. කිසිවෙකු ඔබේ නම ලියා ගන්නේ නැහැ, ඔබට කතා කරන්නත් අවශ්‍ය නැහැ.</p><p class="lead" data-l="ta">Alcoholics Anonymous (AA) கூட்டங்கள் இலங்கை முழுவதும் ஒவ்வொரு வாரமும் தமிழ், சிங்களம் மற்றும் ஆங்கிலத்தில் நடைபெறுகின்றன. இது இலவசம். யாரும் உங்கள் பெயரைப் பதிவு செய்வதில்லை, நீங்கள் பேச வேண்டிய அவசியமும் இல்லை.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <a class="btn" href="#meetings"><span data-l="en">Find a meeting</span><span data-l="si">රැස්වීමක් සොයන්න</span><span data-l="ta">ஒரு கூட்டத்தைக் கண்டறியுங்கள்</span></a>
+      <a class="btn ghost" href="#first-meeting"><span data-l="en">What happens at a meeting?</span><span data-l="si">රැස්වීමකදී සිදු වන්නේ කුමක්ද?</span><span data-l="ta">கூட்டத்தில் என்ன நடக்கும்?</span></a>
+    </div>
+  </div>
+  <div id="next" class="callout read" aria-live="polite"></div>
+  <div class="paths">
+    <a class="path" href="#first-meeting">
+      <h3><span data-l="en">I think I have a problem</span><span data-l="si">මට ගැටලුවක් ඇති බව සිතෙනවා</span><span data-l="ta">எனக்குப் பிரச்சினை இருப்பதாக நினைக்கிறேன்</span></h3>
+      <p data-l="en">What a first meeting is like, what it costs (nothing) and whether you have to say anything (no).</p>
+      <p data-l="si">පළමු රැස්වීම කෙබඳුද, එයට කොපමණ වැය වේද (කිසිවක් නැහැ), ඔබ යමක් කිව යුතුද (නැහැ) යන්න.</p><p data-l="ta">முதல் கூட்டம் எப்படி இருக்கும், அதற்கு எவ்வளவு செலவாகும் (எதுவும் இல்லை), நீங்கள் ஏதாவது பேச வேண்டுமா (இல்லை).</p>
+      <span class="go"><span data-l="en">Read this first →</span><span data-l="si">මුලින්ම මෙය කියවන්න →</span><span data-l="ta">முதலில் இதைப் படியுங்கள் →</span></span></a>
+    <a class="path" href="#meetings">
+      <h3><span data-l="en">I'm looking for a meeting</span><span data-l="si">මම රැස්වීමක් සොයනවා</span><span data-l="ta">நான் ஒரு கூட்டத்தைத் தேடுகிறேன்</span></h3>
+      <p data-l="en">Every weekly meeting in Sri Lanka, by day, district and language. Visitors very welcome.</p>
+      <p data-l="si">ශ්‍රී ලංකාවේ සියලු සතිපතා රැස්වීම්, දිනය, දිස්ත්‍රික්කය සහ භාෂාව අනුව. සංචාරකයන්ටද සාදරයෙන් පිළිගැනීම.</p><p data-l="ta">இலங்கையிலுள்ள அனைத்து வாராந்தக் கூட்டங்களும், நாள், மாவட்டம், மொழி வாரியாக. வருகையாளர்களையும் அன்புடன் வரவேற்கிறோம்.</p>
+      <span class="go"><span data-l="en">See meetings →</span><span data-l="si">රැස්වීම් බලන්න →</span><span data-l="ta">கூட்டங்களைப் பாருங்கள் →</span></span></a>
+    <a class="path" href="#families">
+      <h3><span data-l="en">I'm worried about someone</span><span data-l="si">මම කෙනෙකු ගැන කනස්සල්ලෙන් ඉන්නේ</span><span data-l="ta">ஒருவரைப் பற்றி நான் கவலைப்படுகிறேன்</span></h3>
+      <p data-l="en">For husbands, wives, parents and children of someone who drinks. What helps, and support for you.</p>
+      <p data-l="si">මත්පැන් පානය කරන කෙනෙකුගේ ස්වාමිපුරුෂයා, බිරිඳ, දෙමාපියන් සහ දරුවන් සඳහා. උපකාර වන දේ සහ ඔබටම ලැබිය හැකි සහාය.</p><p data-l="ta">குடிப்பழக்கமுள்ள ஒருவரின் கணவர், மனைவி, பெற்றோர், பிள்ளைகளுக்கு. எது உதவும், உங்களுக்கான ஆதரவு.</p>
+      <span class="go"><span data-l="en">Help for families →</span><span data-l="si">පවුල් සඳහා උපකාර →</span><span data-l="ta">குடும்பங்களுக்கான உதவி →</span></span></a>
+  </div>
+  <div class="facts">
+    <div><b><span data-l="en">No dues or fees</span><span data-l="si">සාමාජික ගාස්තු නැහැ</span><span data-l="ta">கட்டணங்கள் இல்லை</span></b><span class="muted"><span data-l="en">AA is self-supporting through members' own contributions.</span><span data-l="si">AA සාමාජිකයන්ගේම දායකත්වයෙන් ස්වයංපෝෂිතයි.</span><span data-l="ta">AA உறுப்பினர்களின் சொந்தப் பங்களிப்புகளால் தன்னிறைவு பெறுகிறது.</span></span></div>
+    <div><b><span data-l="en">First names only</span><span data-l="si">මුල් නම පමණයි</span><span data-l="ta">முதல் பெயர் மட்டும்</span></b><span class="muted"><span data-l="en">No register, no records, nothing repeated outside the room.</span><span data-l="si">ලේඛනයක් නැහැ, වාර්තා නැහැ, රැස්වීමේ කියන දේ පිටත නැවත කියන්නේ නැහැ.</span><span data-l="ta">பதிவேடு இல்லை, ஆவணங்கள் இல்லை, கூட்டத்தில் சொல்லப்படுவது வெளியே சொல்லப்படுவதில்லை.</span></span></div>
+    <div><b><span data-l="en">No religion required</span><span data-l="si">ආගමක් අවශ්‍ය නැහැ</span><span data-l="ta">மதம் அவசியமில்லை</span></b><span class="muted"><span data-l="en">AA is not allied with any sect or denomination.</span><span data-l="si">AA කිසිදු ආගමක් හෝ නිකායක් සමඟ බැඳී නැහැ.</span><span data-l="ta">AA எந்த மதத்துடனோ பிரிவுடனோ இணைந்ததல்ல.</span></span></div>
+    <div><b><span data-l="en">Online too</span><span data-l="si">අන්තර්ජාලයෙනුත්</span><span data-l="ta">இணையத்திலும்</span></b><span class="muted"><span data-l="en">A Zoom meeting runs Monday, Wednesday and Friday evenings.</span><span data-l="si">සඳුදා, බදාදා සහ සිකුරාදා සවස Zoom රැස්වීමක් පැවැත්වෙනවා.</span><span data-l="ta">திங்கள், புதன், வெள்ளி மாலைகளில் Zoom கூட்டம் நடைபெறுகிறது.</span></span></div>
+  </div>
+  <div class="own read">
+    <span class="h"><span data-l="en">Not sure if AA is for you?</span><span data-l="si">AA ඔබට ගැළපේදැයි විශ්වාස නැද්ද?</span><span data-l="ta">AA உங்களுக்குப் பொருத்தமானதா என்று உறுதியில்லையா?</span></span>
+    <p style="margin:0" data-l="en">AA World Services publishes a short pamphlet with twelve questions only you can answer. <a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener">Read "Is A.A. for Me?" on aa.org</a></p>
+    <p style="margin:0" data-l="si">ඔබට පමණක් පිළිතුරු දිය හැකි ප්‍රශ්න දොළහක් සහිත කෙටි පත්‍රිකාවක් AA World Services ප්‍රකාශයට පත් කරනවා (ඉංග්‍රීසියෙන්). <a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener">aa.org හි "Is A.A. for Me?" කියවන්න</a></p><p style="margin:0" data-l="ta">உங்களால் மட்டுமே பதிலளிக்கக்கூடிய பன்னிரண்டு கேள்விகளுடன் ஒரு சிறு கையேட்டை AA World Services வெளியிடுகிறது (ஆங்கிலத்தில்). <a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener">aa.org இல் "Is A.A. for Me?" படியுங்கள்</a></p>
+  </div>
+</section>
+
+<!-- MEETINGS -->
+<section class="view" id="v-meetings" hidden>
+  <div class="read" style="display:flex;flex-direction:column;gap:8px">
+    <h1><span data-l="en">Meetings in Sri Lanka</span><span data-l="si">ශ්‍රී ලංකාවේ රැස්වීම්</span><span data-l="ta">இலங்கையிலுள்ள கூட்டங்கள்</span></h1>
+    <p class="muted" data-l="en">Times are Sri Lanka time. Meetings sometimes change, so it's best to call the contact number before your first visit.</p>
+    <p class="muted" data-l="si">වේලාවන් ශ්‍රී ලංකා වේලාවෙන්. රැස්වීම් සමහර විට වෙනස් වන නිසා, ඔබේ පළමු පැමිණීමට පෙර දී ඇති අංකය අමතා විමසීම වඩාත් හොඳයි.</p><p class="muted" data-l="ta">நேரங்கள் இலங்கை நேரப்படி. கூட்டங்கள் சில வேளைகளில் மாறலாம், எனவே முதல் முறை செல்லும் முன் கொடுக்கப்பட்ட இலக்கத்தை அழைத்து உறுதிப்படுத்துவது நல்லது.</p>
+  </div>
+  <div class="finder">
+    <div class="filters">
+      <div class="fgroup"><label class="h"><span data-l="en">Day</span><span data-l="si">දිනය</span><span data-l="ta">நாள்</span></label><div class="chips" id="f-day"></div></div>
+      <div class="fgroup"><label class="h" for="f-region"><span data-l="en">District</span><span data-l="si">දිස්ත්‍රික්කය</span><span data-l="ta">மாவட்டம்</span></label><select id="f-region"></select></div>
+      <div class="fgroup"><label class="h"><span data-l="en">Language</span><span data-l="si">භාෂාව</span><span data-l="ta">மொழி</span></label><div class="chips" id="f-lang"></div></div>
+      <div class="fgroup"><label class="h"><span data-l="en">Format</span><span data-l="si">ආකාරය</span><span data-l="ta">வகை</span></label><div class="chips" id="f-fmt"></div></div>
+      <p class="count" id="count"></p>
+    </div>
+    <div id="list"></div>
+  </div>
+</section>
+
+<!-- FIRST MEETING (English) -->
+<section class="view" id="v-first-meeting" hidden>
+  <div class="prose read" data-l="en">
+    <h1>What happens at an AA meeting?</h1>
+    <p class="lead">You walk in, you sit down, and you listen. You don't have to speak, you don't have to give your real name, and it costs nothing. Most people find the first meeting far less frightening than the hour spent working up to it.</p>
+    <div class="callout"><b>Rather talk to someone first?</b><span>Call the helpline on <b>+94 72 786 0860</b>. Someone who has been where you are will answer.</span></div>
+    <div class="qa"><h3>What is the room like?</h3><p>A room with chairs, usually in a circle, with somewhere between six and twenty people. There's often tea. Someone reads a short passage to open, then people take turns to talk about their week or their drinking. Nobody interrupts, nobody gives advice. After about an hour it ends.</p></div>
+    <div class="qa"><h3>Do I have to speak?</h3><p>No. When it's your turn you can say "I'll just listen tonight" and the room moves on. Plenty of people say nothing for their first few meetings.</p></div>
+    <div class="qa"><h3>Do I have to say I'm an alcoholic?</h3><p>No. Nobody will tell you what you are; that is for you to decide. AA's Preamble puts the only condition simply:</p>
+      <blockquote>"The only requirement for membership is a desire to stop drinking."</blockquote>
+      <span class="credit">From the A.A. Preamble. Reprinted with permission of A.A. Grapevine, Inc.</span></div>
+    <div class="qa"><h3>Does it cost anything?</h3><p>No. In the Preamble's words, "There are no dues or fees for A.A. membership; we are self-supporting through our own contributions." A basket may go round for the room and the tea. Newcomers aren't expected to put anything in.</p></div>
+    <div class="qa"><h3>Will anyone know I was there?</h3><p>Anonymity is the foundation of AA. First names only, no register, nothing written down, and nothing said in the room is repeated outside it. In Sri Lanka the fellowship is also known as The Turning Point.</p></div>
+    <div class="qa"><h3>Do I have to be religious?</h3><p>No. AA is not allied with any sect or denomination. You'll hear some members speak of God or a higher power, and you'll meet Buddhists, Hindus, Muslims, Christians, atheists and agnostics. Nobody will try to convert you.</p></div>
+    <div class="qa"><h3>Can I bring someone with me?</h3><p>Some meetings are "open", so anyone may attend. Others are "closed", for people who have a drinking problem or think they may have. Call the meeting's contact number to check before bringing someone.</p></div>
+    <div class="qa"><h3>What if I drink heavily every day?</h3><p>AA is not a medical service and doesn't give medical advice. If you drink heavily every day, please talk to a doctor before stopping, because stopping suddenly can be dangerous. You're welcome at a meeting in the meantime.</p></div>
+    <div class="own">
+      <span class="h">In AA's own words</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener">A Newcomer Asks</a> <span>Short answers to the questions people ask before their first meeting (PDF)</span></li>
+        <li><a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener">Frequently Asked Questions About A.A.</a> <span>A fuller introduction</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-introduction-aa-recovery-program" target="_blank" rel="noopener">This Is A.A.</a> <span>How the AA programme of recovery works</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener">Is A.A. for Me?</a> <span>Twelve questions to ask yourself</span></li>
+      </ul>
+    </div>
+    <p><a class="btn" href="#meetings">Find a meeting this week</a></p>
+  </div>
+
+  <!-- FIRST MEETING (Sinhala) -->
+  <div class="prose read" data-l="si">
+    <h1>AA රැස්වීමකදී සිදු වන්නේ කුමක්ද?</h1>
+    <p class="lead">ඔබ ඇතුළට ගිහින්, වාඩි වෙලා, සවන් දෙනවා. ඔබට කතා කරන්න අවශ්‍ය නැහැ, ඔබේ සැබෑ නම කියන්න අවශ්‍ය නැහැ, කිසිම මුදලක් වැය වෙන්නේත් නැහැ. බොහෝ දෙනෙකුට පළමු රැස්වීම, ඊට යන්න සිත හදාගන්නා කාලයට වඩා බොහෝ අඩුවෙන් බිය උපදවන බව පෙනෙනවා.</p>
+    <div class="callout"><b>මුලින්ම කෙනෙකු සමඟ කතා කරන්න කැමතිද?</b><span>උපකාරක අංකය <b>+94 72 786 0860</b> අමතන්න. ඔබ ඉන්න තැනම කලින් හිටපු කෙනෙක් පිළිතුරු දෙයි.</span></div>
+    <div class="qa"><h3>රැස්වීම් කාමරය කෙබඳුද?</h3><p>පුටු තියෙන කාමරයක්, සාමාන්‍යයෙන් රවුමකට, හය දෙනෙකුගේ සිට විසි දෙනෙකු දක්වා. බොහෝ විට තේ තියෙනවා. කෙනෙක් ආරම්භයේදී කෙටි කොටසක් කියවනවා, ඊට පස්සේ අය වාරයෙන් වාරයට තමන්ගේ සතිය ගැන හෝ මත්පැන් පානය ගැන කතා කරනවා. කිසිවෙක් බාධා කරන්නේ නැහැ, කිසිවෙක් උපදෙස් දෙන්නේ නැහැ. පැයකට පමණ පසු රැස්වීම අවසන් වෙනවා.</p></div>
+    <div class="qa"><h3>මට කතා කරන්න සිද්ධ වෙනවාද?</h3><p>නැහැ. ඔබේ වාරය ආවම "අද මම සවන් දෙන්නම්" කියන්න පුළුවන්, රැස්වීම ඉදිරියට යනවා. බොහෝ දෙනා තමන්ගේ මුල් රැස්වීම් කිහිපයේදී කිසිවක් කියන්නේ නැහැ.</p></div>
+    <div class="qa"><h3>මම මත්පැන්වලට ඇබ්බැහි වූ කෙනෙක් කියා කිව යුතුද?</h3><p>නැහැ. ඔබ කවුද කියා කිසිවෙක් ඔබට කියන්නේ නැහැ; එය තීරණය කළ යුත්තේ ඔබමයි. AA හි සාමාජිකත්වය සඳහා ඇති එකම අවශ්‍යතාවය මත්පැන් පානය නවත්වන්න ඇති ආශාවයි. AA Preamble හි නිල වචන මෙසේයි:</p>
+      <blockquote lang="en">"The only requirement for membership is a desire to stop drinking."</blockquote>
+      <span class="credit">From the A.A. Preamble. Reprinted with permission of A.A. Grapevine, Inc.</span></div>
+    <div class="qa"><h3>මුදල් වැය වෙනවාද?</h3><p>නැහැ. AA සාමාජිකත්වය සඳහා ගාස්තු හෝ දායක මුදල් නැහැ; AA සාමාජිකයන්ගේම දායකත්වයෙන් ස්වයංපෝෂිතයි. කාමරය සහ තේ වෙනුවෙන් කූඩයක් යවන්න පුළුවන්. අලුතින් එන අය කිසිවක් දැමිය යුතු නැහැ.</p></div>
+    <div class="qa"><h3>මම එහි ගිය බව කාටහරි දැනගන්න ලැබෙයිද?</h3><p>නිර්නාමිකභාවය AA හි පදනමයි. මුල් නම පමණයි, ලේඛනයක් නැහැ, කිසිවක් ලියා ගන්නේ නැහැ, රැස්වීමේ කියන කිසිවක් පිටත නැවත කියන්නේ නැහැ. ශ්‍රී ලංකාවේ මෙම සංගමය The Turning Point ලෙසත් හඳුන්වනවා.</p></div>
+    <div class="qa"><h3>මම ආගමික කෙනෙක් විය යුතුද?</h3><p>නැහැ. AA කිසිදු ආගමක් හෝ නිකායක් සමඟ බැඳී නැහැ. සමහර සාමාජිකයන් දෙවියන් හෝ උසස් බලයක් ගැන කතා කරනවා. ඒ වගේම බෞද්ධ, හින්දු, මුස්ලිම්, ක්‍රිස්තියානි සහ කිසිදු ආගමක් නොඅදහන අයත් ඔබට හමු වෙයි. කිසිවෙක් ඔබව වෙනත් ආගමකට හරවන්න උත්සාහ කරන්නේ නැහැ.</p></div>
+    <div class="qa"><h3>මට කෙනෙකු එක්ක යන්න පුළුවන්ද?</h3><p>සමහර රැස්වීම් "විවෘත" රැස්වීම්, ඒවාට ඕනෑම කෙනෙකුට සහභාගී වෙන්න පුළුවන්. අනෙක් ඒවා "සංවෘත" රැස්වීම්, මත්පැන් ගැටලුවක් තියෙන හෝ තියෙනවා කියා සිතන අය සඳහා පමණයි. කෙනෙකු රැගෙන යාමට පෙර රැස්වීමේ අංකය අමතා විමසන්න.</p></div>
+    <div class="qa"><h3>මම දිනපතා අධික ලෙස බොනවා නම්?</h3><p>AA වෛද්‍ය සේවාවක් නොවන අතර වෛද්‍ය උපදෙස් දෙන්නේ නැහැ. ඔබ දිනපතා අධික ලෙස බොනවා නම්, එකවර නැවැත්වීම භයානක විය හැකි නිසා, නවත්වන්න පෙර කරුණාකර වෛද්‍යවරයෙකු හමුවන්න. ඒ අතරතුරත් ඔබට රැස්වීමකට එන්න පුළුවන්.</p></div>
+    <div class="own">
+      <span class="h">AA හි නිල ප්‍රකාශන (ඉංග්‍රීසියෙන්)</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener" lang="en">A Newcomer Asks</a> <span>පළමු රැස්වීමට පෙර අසන ප්‍රශ්නවලට කෙටි පිළිතුරු (PDF)</span></li>
+        <li><a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener" lang="en">Frequently Asked Questions About A.A.</a> <span>වඩාත් සම්පූර්ණ හැඳින්වීමක්</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-introduction-aa-recovery-program" target="_blank" rel="noopener" lang="en">This Is A.A.</a> <span>AA සුවය ලැබීමේ වැඩසටහන ක්‍රියා කරන ආකාරය</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener" lang="en">Is A.A. for Me?</a> <span>ඔබෙන්ම ඇසිය යුතු ප්‍රශ්න දොළහ</span></li>
+      </ul>
+    </div>
+    <p><a class="btn" href="#meetings">මේ සතියේ රැස්වීමක් සොයන්න</a></p>
+  </div><div class="prose read" data-l="ta">
+    <h1>AA கூட்டத்தில் என்ன நடக்கும்?</h1>
+    <p class="lead">நீங்கள் உள்ளே சென்று, அமர்ந்து, கேட்கிறீர்கள். நீங்கள் பேச வேண்டியதில்லை, உங்கள் உண்மையான பெயரைச் சொல்ல வேண்டியதில்லை, எந்தச் செலவும் இல்லை. பெரும்பாலானோருக்கு, முதல் கூட்டத்திற்குச் செல்லத் தயாராகும் நேரத்தைவிட கூட்டம் மிகக் குறைவான பயத்தையே தருகிறது.</p>
+    <div class="callout"><b>முதலில் யாருடனாவது பேச விரும்புகிறீர்களா?</b><span>உதவி இலக்கம் <b>+94 72 786 0860</b> ஐ அழையுங்கள். நீங்கள் இப்போது இருக்கும் நிலையில் முன்பு இருந்த ஒருவர் பதிலளிப்பார்.</span></div>
+    <div class="qa"><h3>கூட்ட அறை எப்படி இருக்கும்?</h3><p>நாற்காலிகள் உள்ள ஒரு அறை, பொதுவாக வட்டமாக, ஆறு முதல் இருபது பேர் வரை. பெரும்பாலும் தேநீர் இருக்கும். ஆரம்பத்தில் ஒருவர் ஒரு சிறு பகுதியை வாசிப்பார், பின்னர் ஒவ்வொருவரும் தங்கள் வாரத்தைப் பற்றியோ குடிப்பழக்கத்தைப் பற்றியோ பேசுவார்கள். யாரும் குறுக்கிடுவதில்லை, யாரும் அறிவுரை சொல்வதில்லை. சுமார் ஒரு மணி நேரத்தில் கூட்டம் முடிவடையும்.</p></div>
+    <div class="qa"><h3>நான் பேச வேண்டுமா?</h3><p>இல்லை. உங்கள் முறை வரும்போது "இன்று நான் கேட்க மட்டும் விரும்புகிறேன்" என்று சொல்லலாம், கூட்டம் தொடரும். பலர் தங்கள் முதல் சில கூட்டங்களில் எதுவும் பேசுவதில்லை.</p></div>
+    <div class="qa"><h3>நான் மதுவுக்கு அடிமையானவன் என்று சொல்ல வேண்டுமா?</h3><p>இல்லை. நீங்கள் யார் என்று யாரும் உங்களுக்குச் சொல்ல மாட்டார்கள்; அதை நீங்களே தீர்மானிக்க வேண்டும். AA உறுப்பினராவதற்கான ஒரே தேவை குடிப்பதை நிறுத்த வேண்டும் என்ற விருப்பம் மட்டுமே. AA Preamble இன் அதிகாரபூர்வ வாசகம்:</p>
+      <blockquote lang="en">"The only requirement for membership is a desire to stop drinking."</blockquote>
+      <span class="credit">From the A.A. Preamble. Reprinted with permission of A.A. Grapevine, Inc.</span></div>
+    <div class="qa"><h3>ஏதாவது செலவாகுமா?</h3><p>இல்லை. AA உறுப்பினர் கட்டணமோ சந்தாவோ இல்லை; AA உறுப்பினர்களின் சொந்தப் பங்களிப்புகளால் தன்னிறைவு பெறுகிறது. அறைக்கும் தேநீருக்குமாக ஒரு கூடை சுற்றி வரலாம். புதிதாக வருபவர்கள் எதுவும் போட வேண்டியதில்லை.</p></div>
+    <div class="qa"><h3>நான் அங்கு சென்றது யாருக்காவது தெரியவருமா?</h3><p>அநாமதேயம் AA இன் அடித்தளம். முதல் பெயர் மட்டும், பதிவேடு இல்லை, எதுவும் எழுதப்படுவதில்லை, கூட்டத்தில் சொல்லப்படும் எதுவும் வெளியே சொல்லப்படுவதில்லை. இலங்கையில் இந்த ஐக்கியம் The Turning Point என்றும் அழைக்கப்படுகிறது.</p></div>
+    <div class="qa"><h3>நான் மதநம்பிக்கை உள்ளவராக இருக்க வேண்டுமா?</h3><p>இல்லை. AA எந்த மதத்துடனோ பிரிவுடனோ இணைந்ததல்ல. சில உறுப்பினர்கள் கடவுளைப் பற்றியோ ஒரு உயர் சக்தியைப் பற்றியோ பேசுவார்கள். பௌத்தர்கள், இந்துக்கள், முஸ்லிம்கள், கிறிஸ்தவர்கள், மத நம்பிக்கை இல்லாதவர்கள் என அனைவரையும் நீங்கள் சந்திப்பீர்கள். யாரும் உங்களை மதம் மாற்ற முயற்சிக்க மாட்டார்கள்.</p></div>
+    <div class="qa"><h3>நான் யாரையாவது அழைத்து வரலாமா?</h3><p>சில கூட்டங்கள் "திறந்த" கூட்டங்கள், அவற்றில் யார் வேண்டுமானாலும் கலந்துகொள்ளலாம். மற்றவை "மூடிய" கூட்டங்கள், குடிப்பழக்கப் பிரச்சினை உள்ளவர்கள் அல்லது இருக்கலாம் என்று நினைப்பவர்களுக்கு மட்டும். ஒருவரை அழைத்து வருவதற்கு முன் கூட்டத்தின் இலக்கத்தை அழைத்துக் கேளுங்கள்.</p></div>
+    <div class="qa"><h3>நான் தினமும் அதிகமாகக் குடித்தால்?</h3><p>AA ஒரு மருத்துவ சேவை அல்ல, மருத்துவ ஆலோசனையும் வழங்குவதில்லை. நீங்கள் தினமும் அதிகமாகக் குடித்தால், திடீரென நிறுத்துவது ஆபத்தானதாக இருக்கலாம் என்பதால், நிறுத்துவதற்கு முன் தயவுசெய்து ஒரு வைத்தியரைச் சந்தியுங்கள். இதற்கிடையிலும் நீங்கள் கூட்டத்திற்கு வரலாம்.</p></div>
+    <div class="own">
+      <span class="h">AA இன் அதிகாரபூர்வ வெளியீடுகள் (ஆங்கிலத்தில்)</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener" lang="en">A Newcomer Asks</a> <span>முதல் கூட்டத்திற்கு முன் கேட்கப்படும் கேள்விகளுக்குச் சுருக்கமான பதில்கள் (PDF)</span></li>
+        <li><a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener" lang="en">Frequently Asked Questions About A.A.</a> <span>விரிவான அறிமுகம்</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-introduction-aa-recovery-program" target="_blank" rel="noopener" lang="en">This Is A.A.</a> <span>AA மீட்புத் திட்டம் எவ்வாறு செயல்படுகிறது</span></li>
+        <li><a class="out" href="https://www.aa.org/aa-me" target="_blank" rel="noopener" lang="en">Is A.A. for Me?</a> <span>உங்களை நீங்களே கேட்க வேண்டிய பன்னிரண்டு கேள்விகள்</span></li>
+      </ul>
+    </div>
+    <p><a class="btn" href="#meetings">இந்த வாரம் ஒரு கூட்டத்தைக் கண்டறியுங்கள்</a></p>
+  </div>
+</section>
+
+<!-- FAMILIES (English) -->
+<section class="view" id="v-families" hidden>
+  <div class="prose read" data-l="en">
+    <h1>Someone I love is drinking. What can I do?</h1>
+    <p class="lead">You can't make another person stop drinking. But you are not powerless, and you are far from alone.</p>
+    <div class="qa"><h3>The hardest truth first</h3><p>You didn't cause it, you can't control it and you can't cure it. If pleading, hiding bottles or covering for them had worked, you wouldn't be reading this. That isn't your failure; it's the nature of the illness.</p></div>
+    <div class="qa"><h3>What helps</h3><ul>
+      <li><b>Say it once, calmly, when they're sober.</b> "I'm frightened by how much you're drinking" lands very differently from an accusation.</li>
+      <li><b>Stop shielding them from consequences.</b> Calling their office, settling the debts, explaining away the missed wedding. Stopping isn't cruelty.</li>
+      <li><b>Keep the helpline and meeting times in your phone.</b> Willingness often arrives suddenly and passes within a day.</li>
+      <li><b>Look after yourself.</b> Your sleep, your health and your own life matter now, not once they're better.</li>
+    </ul></div>
+    <div class="qa"><h3>Can I make them go to a meeting?</h3><p>No, and pushing usually hardens the refusal. Mention once that AA is free and anonymous, leave the meeting times where they'll see them, and say nothing more. If they ever say "maybe I should go", offer to take them.</p></div>
+    <div class="qa"><h3>Support for you</h3><p>AA is for people who want to stop drinking themselves, but our helpline speaks to worried families often and will do its best to point you somewhere useful. Al-Anon Family Groups is a separate fellowship for people affected by someone else's drinking; AA is not affiliated with it. <span class="verify">Confirm local Al-Anon meetings</span> Its online meetings are listed at <a class="out" href="https://al-anon.org" target="_blank" rel="noopener">al-anon.org</a>.</p></div>
+    <div class="own">
+      <span class="h">In AA's own words</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/there-alcoholic-your-life" target="_blank" rel="noopener">Is There an Alcoholic in Your Life?</a> <span>AA World Services' pamphlet for families and friends</span></li>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener">A Newcomer Asks</a> <span>Something to leave where they'll find it (PDF)</span></li>
+      </ul>
+    </div>
+    <div class="safety">
+      <h3>If you are not safe</h3>
+      <p>If you or your children are in danger, your safety comes first, ahead of their recovery and ahead of the family's name. These are public emergency and support services; AA is not affiliated with them.</p>
+      <table>
+        <tr><td>Police emergency</td><td>119</td></tr>
+        <tr><td>Women In Need (WIN), 24 hours</td><td>+94 77 567 6555</td></tr>
+        <tr><td>Women &amp; Child Affairs helpline</td><td>1938</td></tr>
+        <tr><td>1333 crisis support, 24 hours</td><td>1333</td></tr>
+      </table>
+      <span class="verify">Each number to be rung and confirmed before publishing</span>
+    </div>
+  </div>
+
+  <!-- FAMILIES (Sinhala) -->
+  <div class="prose read" data-l="si">
+    <h1>මා ආදරය කරන කෙනෙක් මත්පැන් පානය කරනවා. මට කුමක් කළ හැකිද?</h1>
+    <p class="lead">වෙනත් කෙනෙකුගේ මත්පැන් පානය ඔබට නවත්වන්න බැහැ. නමුත් ඔබ අසරණ නැහැ, ඔබ තනිවමත් නැහැ.</p>
+    <div class="qa"><h3>මුලින්ම, දුෂ්කරම සත්‍යය</h3><p>ඔබ එයට හේතුව නොවෙයි, ඔබට එය පාලනය කරන්න බැහැ, ඔබට එය සුව කරන්නත් බැහැ. ආයාචනා කිරීම, බෝතල් සැඟවීම හෝ ඔවුන් වෙනුවෙන් නිදහසට කරුණු කීම සාර්ථක වුණා නම්, ඔබ මෙය කියවන්නේ නැහැ. එය ඔබේ අසාර්ථකත්වයක් නොවෙයි; එය මෙම රෝගයේ ස්වභාවයයි.</p></div>
+    <div class="qa"><h3>උපකාර වන දේ</h3><ul>
+      <li><b>ඔවුන් සිහියෙන් සිටින වෙලාවක, සන්සුන්ව, එක් වරක් කියන්න.</b> "ඔයා බොන ප්‍රමාණය ගැන මට බයයි" කියන එක චෝදනාවකට වඩා බොහෝ වෙනස් ලෙස දැනෙනවා.</li>
+      <li><b>ප්‍රතිවිපාකවලින් ඔවුන්ව ආරක්ෂා කිරීම නවත්වන්න.</b> ඔවුන්ගේ කාර්යාලයට කතා කිරීම, ණය ගෙවීම, මඟහැරුණු මඟුල් ගෙදරට නිදහසට කරුණු කීම. මේවා නැවැත්වීම කුරිරුකමක් නොවෙයි.</li>
+      <li><b>උපකාරක අංකය සහ රැස්වීම් වේලාවන් ඔබේ දුරකථනයේ තියාගන්න.</b> කැමැත්ත බොහෝ විට හදිසියේ ඇති වී දවසක් ඇතුළත නැති වී යනවා.</li>
+      <li><b>ඔබ ගැනත් සලකන්න.</b> ඔබේ නින්ද, සෞඛ්‍යය සහ ඔබේම ජීවිතය වැදගත් වන්නේ දැන්මයි, ඔවුන් සුවපත් වූ පසු පමණක් නොවෙයි.</li>
+    </ul></div>
+    <div class="qa"><h3>මට ඔවුන්ව රැස්වීමකට යවන්න පුළුවන්ද?</h3><p>නැහැ, බලකිරීමෙන් බොහෝ විට ප්‍රතික්ෂේප කිරීම තවත් දැඩි වෙනවා. AA නොමිලේ සහ නිර්නාමික බව එක් වරක් කියන්න, රැස්වීම් වේලාවන් ඔවුන්ට පෙනෙන තැනක තියන්න, ඊට වඩා කිසිවක් කියන්න එපා. "මමත් යන්න ඕනෙද දන්නෑ" කියා ඔවුන් කවදා හෝ කීවොත්, ඔවුන්ව රැගෙන යන්න ඉදිරිපත් වන්න.</p></div>
+    <div class="qa"><h3>ඔබට සහාය</h3><p>AA යනු තමන්ම මත්පැන් පානය නවත්වන්න කැමති අය සඳහායි. නමුත් අපගේ උපකාරක අංකය කනස්සල්ලට පත් පවුල් සමඟ නිතර කතා කරනවා, ඔබට ප්‍රයෝජනවත් තැනකට යොමු කරන්න උත්සාහ කරනවා. Al-Anon Family Groups යනු වෙනත් කෙනෙකුගේ මත්පැන් පානයෙන් බලපෑමට ලක් වූ අය සඳහා වන වෙනම සංගමයක්; AA එය සමඟ අනුබද්ධ නැහැ. <span class="verify">Confirm local Al-Anon meetings</span> එහි අන්තර්ජාල රැස්වීම් <a class="out" href="https://al-anon.org" target="_blank" rel="noopener">al-anon.org</a> හි ලැයිස්තුගත කර තියෙනවා (ඉංග්‍රීසියෙන්).</p></div>
+    <div class="own">
+      <span class="h">AA හි නිල ප්‍රකාශන (ඉංග්‍රීසියෙන්)</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/there-alcoholic-your-life" target="_blank" rel="noopener" lang="en">Is There an Alcoholic in Your Life?</a> <span>පවුල් සහ මිතුරන් සඳහා AA World Services පත්‍රිකාව</span></li>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener" lang="en">A Newcomer Asks</a> <span>ඔවුන්ට හමු වන තැනක තැබිය හැකි දෙයක් (PDF)</span></li>
+      </ul>
+    </div>
+    <div class="safety">
+      <h3>ඔබ ආරක්ෂිත නැත්නම්</h3>
+      <p>ඔබ හෝ ඔබේ දරුවන් අනතුරක නම්, ඔබේ ආරක්ෂාව පළමු තැන ගන්නවා: ඔවුන්ගේ සුවයට සහ පවුලේ නම්බුවට වඩා පෙර. මේවා පොදු හදිසි සහ සහාය සේවා; AA ඒවා සමඟ අනුබද්ධ නැහැ.</p>
+      <table>
+        <tr><td>පොලිස් හදිසි ඇමතුම්</td><td>119</td></tr>
+        <tr><td>Women In Need (WIN), පැය 24</td><td>+94 77 567 6555</td></tr>
+        <tr><td>කාන්තා හා ළමා කටයුතු උපකාරක අංකය</td><td>1938</td></tr>
+        <tr><td>1333 අර්බුද සහාය, පැය 24</td><td>1333</td></tr>
+      </table>
+      <span class="verify">Each number to be rung and confirmed before publishing</span>
+    </div>
+  </div><div class="prose read" data-l="ta">
+    <h1>நான் நேசிக்கும் ஒருவர் குடிக்கிறார். நான் என்ன செய்யலாம்?</h1>
+    <p class="lead">இன்னொருவரின் குடிப்பழக்கத்தை உங்களால் நிறுத்த முடியாது. ஆனால் நீங்கள் உதவியற்றவர் அல்ல, நீங்கள் தனியாகவும் இல்லை.</p>
+    <div class="qa"><h3>முதலில், கடினமான உண்மை</h3><p>நீங்கள் இதற்குக் காரணம் அல்ல, உங்களால் இதைக் கட்டுப்படுத்த முடியாது, குணப்படுத்தவும் முடியாது. கெஞ்சுவதோ, போத்தல்களை ஒளித்து வைப்பதோ, அவர்களுக்காகச் சாக்குச் சொல்வதோ பலனளித்திருந்தால், நீங்கள் இதைப் படித்துக்கொண்டிருக்க மாட்டீர்கள். இது உங்கள் தோல்வி அல்ல; இது இந்த நோயின் இயல்பு.</p></div>
+    <div class="qa"><h3>எது உதவும்</h3><ul>
+      <li><b>அவர்கள் போதையில் இல்லாத நேரத்தில், அமைதியாக, ஒரு முறை சொல்லுங்கள்.</b> "நீங்கள் குடிக்கும் அளவைப் பார்த்து எனக்குப் பயமாக இருக்கிறது" என்பது குற்றச்சாட்டைவிட மிகவும் வித்தியாசமாக உணரப்படும்.</li>
+      <li><b>விளைவுகளிலிருந்து அவர்களைப் பாதுகாப்பதை நிறுத்துங்கள்.</b> அவர்களின் அலுவலகத்திற்கு அழைத்துச் சொல்வது, கடன்களைச் செலுத்துவது, தவறவிட்ட கல்யாணத்திற்குச் சாக்குச் சொல்வது. இவற்றை நிறுத்துவது கொடுமை அல்ல.</li>
+      <li><b>உதவி இலக்கத்தையும் கூட்ட நேரங்களையும் உங்கள் தொலைபேசியில் வைத்திருங்கள்.</b> மனமாற்றம் பெரும்பாலும் திடீரென வந்து ஒரு நாளுக்குள் போய்விடும்.</li>
+      <li><b>உங்களையும் கவனித்துக்கொள்ளுங்கள்.</b> உங்கள் தூக்கம், உடல்நலம், உங்கள் சொந்த வாழ்க்கை இப்போதே முக்கியம், அவர்கள் குணமடைந்த பிறகு மட்டுமல்ல.</li>
+    </ul></div>
+    <div class="qa"><h3>அவர்களைக் கூட்டத்திற்குப் போகச் செய்ய முடியுமா?</h3><p>இல்லை, வற்புறுத்துவது பெரும்பாலும் மறுப்பை இன்னும் உறுதியாக்கும். AA இலவசமானது, அநாமதேயமானது என்று ஒரு முறை சொல்லுங்கள், கூட்ட நேரங்களை அவர்கள் பார்க்கும் இடத்தில் வையுங்கள், அதற்கு மேல் எதுவும் சொல்லாதீர்கள். "நானும் போகலாமோ" என்று அவர்கள் எப்போதாவது சொன்னால், அவர்களை அழைத்துச் செல்ல முன்வாருங்கள்.</p></div>
+    <div class="qa"><h3>உங்களுக்கான ஆதரவு</h3><p>AA என்பது தாங்களே குடிப்பதை நிறுத்த விரும்புபவர்களுக்கானது. ஆனால் எங்கள் உதவி இலக்கம் கவலையில் இருக்கும் குடும்பங்களுடன் அடிக்கடி பேசுகிறது, உங்களுக்குப் பயனுள்ள இடத்திற்கு வழிகாட்ட முயற்சிக்கும். Al-Anon Family Groups என்பது இன்னொருவரின் குடிப்பழக்கத்தால் பாதிக்கப்பட்டவர்களுக்கான தனியான ஐக்கியம்; AA அதனுடன் இணைந்ததல்ல. <span class="verify">Confirm local Al-Anon meetings</span> அதன் இணையக் கூட்டங்கள் <a class="out" href="https://al-anon.org" target="_blank" rel="noopener">al-anon.org</a> இல் பட்டியலிடப்பட்டுள்ளன (ஆங்கிலத்தில்).</p></div>
+    <div class="own">
+      <span class="h">AA இன் அதிகாரபூர்வ வெளியீடுகள் (ஆங்கிலத்தில்)</span>
+      <ul>
+        <li><a class="out" href="https://www.aa.org/there-alcoholic-your-life" target="_blank" rel="noopener" lang="en">Is There an Alcoholic in Your Life?</a> <span>குடும்பத்தினருக்கும் நண்பர்களுக்குமான AA World Services கையேடு</span></li>
+        <li><a class="out" href="https://www.aa.org/sites/default/files/literature/assets/p-24_anewcomerask.pdf" target="_blank" rel="noopener" lang="en">A Newcomer Asks</a> <span>அவர்கள் காணக்கூடிய இடத்தில் வைக்கக்கூடியது (PDF)</span></li>
+      </ul>
+    </div>
+    <div class="safety">
+      <h3>நீங்கள் பாதுகாப்பாக இல்லையென்றால்</h3>
+      <p>நீங்களோ உங்கள் பிள்ளைகளோ ஆபத்தில் இருந்தால், உங்கள் பாதுகாப்பே முதன்மையானது: அவர்களின் மீட்சியைவிடவும் குடும்ப கௌரவத்தைவிடவும் முன்னால். இவை பொது அவசர மற்றும் ஆதரவு சேவைகள்; AA இவற்றுடன் இணைந்ததல்ல.</p>
+      <table>
+        <tr><td>பொலிஸ் அவசர அழைப்பு</td><td>119</td></tr>
+        <tr><td>Women In Need (WIN), 24 மணி நேரம்</td><td>+94 77 567 6555</td></tr>
+        <tr><td>மகளிர் மற்றும் சிறுவர் விவகார உதவி இலக்கம்</td><td>1938</td></tr>
+        <tr><td>1333 நெருக்கடி உதவி, 24 மணி நேரம்</td><td>1333</td></tr>
+      </table>
+      <span class="verify">Each number to be rung and confirmed before publishing</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="view" id="v-contact" hidden>
+  <div class="prose read" data-l="en">
+    <h1>Contact us</h1>
+    <p class="lead">You don't have to give your name, and you don't have to have decided anything.</p>
+    <div class="callout">
+      <span class="muted">Helpline</span><b class="big">+94 72 786 0860</b>
+      <span><button class="copy" data-copy="+94 72 786 0860" data-label-en="Copy number" data-label-si="අංකය පිටපත් කරන්න" data-label-ta="இலக்கத்தை நகலெடுக்க"></button></span>
+    </div>
+    <div class="qa"><h3>Email</h3><p><b>fellowshipsrilanka@gmail.com</b> <button class="copy" data-copy="fellowshipsrilanka@gmail.com" data-label-en="Copy" data-label-si="පිටපත් කරන්න" data-label-ta="நகலெடுக்க"></button><br><span class="muted">Answered by AA members in Sri Lanka. Your email stays private and is never shared.</span></p></div>
+    <div class="qa"><h3>Visiting Sri Lanka?</h3><p>You're very welcome. English-language meetings are held in Colombo, Mount Lavinia, Galle and Hiriketiya, and the Zoom meeting runs three evenings a week. <a href="#meetings">See all meetings</a>.</p></div>
+    <div class="qa"><h3>Doctors, counsellors and the media</h3><p>Please contact the intergroup by email. AA cooperates with professionals but does not affiliate with any organisation. In keeping with AA's Eleventh Tradition, members don't appear in the press, on radio, on film or online by full name or face.</p>
+      <p>Information about AA for professionals is published by AA World Services: <a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener">Frequently Asked Questions About A.A.</a></p></div>
+  </div>
+  <div class="prose read" data-l="si">
+    <h1>අප අමතන්න</h1>
+    <p class="lead">ඔබේ නම කියන්න අවශ්‍ය නැහැ, කිසිවක් තීරණය කර තිබෙන්නත් අවශ්‍ය නැහැ.</p>
+    <div class="callout">
+      <span class="muted">උපකාරක අංකය</span><b class="big">+94 72 786 0860</b>
+      <span><button class="copy" data-copy="+94 72 786 0860" data-label-en="Copy number" data-label-si="අංකය පිටපත් කරන්න" data-label-ta="இலக்கத்தை நகலெடுக்க"></button></span>
+    </div>
+    <div class="qa"><h3>විද්‍යුත් තැපෑල</h3><p><b>fellowshipsrilanka@gmail.com</b> <button class="copy" data-copy="fellowshipsrilanka@gmail.com" data-label-en="Copy" data-label-si="පිටපත් කරන්න" data-label-ta="நகலெடுக்க"></button><br><span class="muted">ශ්‍රී ලංකාවේ AA සාමාජිකයන් පිළිතුරු දෙනවා. ඔබේ විද්‍යුත් තැපෑල රහසිගතව තබා ගන්නා අතර කිසිවෙකු සමඟ බෙදා ගන්නේ නැහැ.</span></p></div>
+    <div class="qa"><h3>ශ්‍රී ලංකාවට පැමිණෙනවාද?</h3><p>ඔබව සාදරයෙන් පිළිගන්නවා. ඉංග්‍රීසි භාෂා රැස්වීම් කොළඹ, ගල්කිස්ස, ගාල්ල සහ හිරිකැටිය යන ප්‍රදේශවල පැවැත්වෙනවා, Zoom රැස්වීම සතියකට සවස් තුනක පැවැත්වෙනවා. <a href="#meetings">සියලු රැස්වීම් බලන්න</a>.</p></div>
+    <div class="qa"><h3>වෛද්‍යවරුන්, උපදේශකයන් සහ මාධ්‍ය</h3><p>කරුණාකර විද්‍යුත් තැපෑලෙන් අන්තර් කණ්ඩායම අමතන්න. AA වෘත්තිකයන් සමඟ සහයෝගයෙන් කටයුතු කළත් කිසිදු සංවිධානයක් සමඟ අනුබද්ධ වන්නේ නැහැ. AA හි එකොළොස්වන සම්ප්‍රදායට අනුව, සාමාජිකයන් පුවත්පත්, ගුවන් විදුලිය, රූපවාහිනිය හෝ අන්තර්ජාලයේ සම්පූර්ණ නමින් හෝ මුහුණින් පෙනී සිටින්නේ නැහැ.</p>
+      <p>වෘත්තිකයන් සඳහා AA පිළිබඳ තොරතුරු AA World Services ප්‍රකාශයට පත් කරනවා (ඉංග්‍රීසියෙන්): <a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener" lang="en">Frequently Asked Questions About A.A.</a></p></div>
+  </div><div class="prose read" data-l="ta">
+    <h1>தொடர்புகொள்ள</h1>
+    <p class="lead">உங்கள் பெயரைச் சொல்ல வேண்டியதில்லை, நீங்கள் எதையும் தீர்மானித்திருக்க வேண்டியதுமில்லை.</p>
+    <div class="callout">
+      <span class="muted">உதவி இலக்கம்</span><b class="big">+94 72 786 0860</b>
+      <span><button class="copy" data-copy="+94 72 786 0860" data-label-en="Copy number" data-label-si="අංකය පිටපත් කරන්න" data-label-ta="இலக்கத்தை நகலெடுக்க"></button></span>
+    </div>
+    <div class="qa"><h3>மின்னஞ்சல்</h3><p><b>fellowshipsrilanka@gmail.com</b> <button class="copy" data-copy="fellowshipsrilanka@gmail.com" data-label-en="Copy" data-label-si="පිටපත් කරන්න" data-label-ta="நகலெடுக்க"></button><br><span class="muted">இலங்கையிலுள்ள AA உறுப்பினர்கள் பதிலளிப்பார்கள். உங்கள் மின்னஞ்சல் இரகசியமாக வைக்கப்படும், யாருடனும் பகிரப்படாது.</span></p></div>
+    <div class="qa"><h3>இலங்கைக்கு வருகிறீர்களா?</h3><p>உங்களை அன்புடன் வரவேற்கிறோம். ஆங்கில மொழிக் கூட்டங்கள் கொழும்பு, கல்கிசை, காலி, ஹிரிகெட்டிய ஆகிய இடங்களில் நடைபெறுகின்றன, Zoom கூட்டம் வாரத்தில் மூன்று மாலைகளில் நடைபெறுகிறது. <a href="#meetings">அனைத்துக் கூட்டங்களையும் பாருங்கள்</a>.</p></div>
+    <div class="qa"><h3>வைத்தியர்கள், ஆலோசகர்கள் மற்றும் ஊடகங்கள்</h3><p>தயவுசெய்து மின்னஞ்சல் மூலம் இன்டர்குரூப்பைத் தொடர்புகொள்ளுங்கள். AA தொழில்முறையாளர்களுடன் ஒத்துழைக்கிறது, ஆனால் எந்த அமைப்புடனும் இணைவதில்லை. AA இன் பதினொன்றாவது பாரம்பரியத்தின்படி, உறுப்பினர்கள் பத்திரிகை, வானொலி, தொலைக்காட்சி அல்லது இணையத்தில் முழுப் பெயருடனோ முகத்துடனோ தோன்றுவதில்லை.</p>
+      <p>தொழில்முறையாளர்களுக்கான AA தகவல்களை AA World Services வெளியிடுகிறது (ஆங்கிலத்தில்): <a class="out" href="https://www.aa.org/frequently-asked-questions-about-aa-formerly-44-questions" target="_blank" rel="noopener" lang="en">Frequently Asked Questions About A.A.</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <div class="preamble" lang="en">
+    <b style="color:var(--ink)">The A.A. Preamble</b>
+    <span>Alcoholics Anonymous is a fellowship of people who share their experience, strength and hope with each other that they may solve their common problem and help others to recover from alcoholism. The only requirement for membership is a desire to stop drinking. There are no dues or fees for A.A. membership; we are self-supporting through our own contributions. A.A. is not allied with any sect, denomination, politics, organization or institution; does not wish to engage in any controversy; neither endorses nor opposes any causes. Our primary purpose is to stay sober and help other alcoholics to achieve sobriety.</span>
+    <span class="credit">Copyright © The A.A. Grapevine, Inc. Reprinted with permission. <span class="verify">Check against current Grapevine text</span></span>
+  </div>
+  <span data-l="si">AA Preamble හි නිල සිංහල පරිවර්තනයක් ලැබුණු පසු මෙහි එක් කෙරේ. <span class="verify">Source official Sinhala translation</span></span><span data-l="ta">AA Preamble இன் அதிகாரபூர்வ தமிழ் மொழிபெயர்ப்பு கிடைத்ததும் இங்கே சேர்க்கப்படும். <span class="verify">Source official Tamil translation</span></span>
+  <span data-l="en">This site is maintained by members of Alcoholics Anonymous in Sri Lanka. It is not an official site of, and does not speak for, Alcoholics Anonymous as a whole or A.A. World Services, Inc. For information about AA worldwide, visit <a class="out" href="https://www.aa.org" target="_blank" rel="noopener">aa.org</a>.</span>
+  <span data-l="si">මෙම වෙබ් අඩවිය ශ්‍රී ලංකාවේ Alcoholics Anonymous සාමාජිකයන් විසින් පවත්වාගෙන යනු ලබනවා. එය සමස්ත Alcoholics Anonymous හෝ A.A. World Services, Inc. හි නිල වෙබ් අඩවියක් නොවන අතර ඔවුන් වෙනුවෙන් කතා කරන්නේ නැහැ. ලොව පුරා AA පිළිබඳ තොරතුරු සඳහා <a class="out" href="https://www.aa.org" target="_blank" rel="noopener">aa.org</a> වෙත පිවිසෙන්න.</span><span data-l="ta">இந்த இணையத்தளம் இலங்கையிலுள்ள Alcoholics Anonymous உறுப்பினர்களால் நடத்தப்படுகிறது. இது முழு Alcoholics Anonymous அல்லது A.A. World Services, Inc. இன் அதிகாரபூர்வ இணையத்தளம் அல்ல, அவர்கள் சார்பாகப் பேசுவதுமில்லை. உலகளாவிய AA தகவல்களுக்கு <a class="out" href="https://www.aa.org" target="_blank" rel="noopener">aa.org</a> ஐப் பார்வையிடுங்கள்.</span>
+  <span data-l="en">Links marked ↗ go to other websites. We don't control their content, and linking to a site outside AA doesn't mean AA endorses it.</span>
+  <span data-l="si">↗ ලකුණ සහිත සබැඳි වෙනත් වෙබ් අඩවි වෙත යනවා. ඒවායේ අන්තර්ගතය අප පාලනය කරන්නේ නැහැ, AA ට පිටතින් ඇති වෙබ් අඩවියකට සබැඳීම AA එය අනුමත කරන බවක් අදහස් කරන්නේ නැහැ.</span><span data-l="ta">↗ குறியுள்ள இணைப்புகள் வேறு இணையத்தளங்களுக்குச் செல்லும். அவற்றின் உள்ளடக்கத்தை நாங்கள் கட்டுப்படுத்துவதில்லை; AA க்கு வெளியேயுள்ள தளத்துடன் இணைப்பது AA அதை அங்கீகரிக்கிறது என்று பொருள்படாது.</span>
+</div></footer>
+
+<script>
+// In production this array is replaced by fetch(FEED_URL): the JSON feed generated from the fellowship's Google Sheet.
+const MEETINGS = [{"slug": "bambalapitiya-saturday", "name": "Bambalapitiya Saturday", "day": 6, "time": "16:30", "end_time": "17:30", "location": "St. Mary's Church Library", "address": "St. Mary's Church, Bambalapitiya, Colombo 00400", "region": "Colombo", "lang": "English", "online": false, "phone": "+94 77 301 7690", "whatsapp": false}, {"slug": "mount-lavinia-sunday", "name": "Mount Lavinia Sunday", "day": 0, "time": "10:30", "end_time": "11:30", "location": "St. Anthony's Church", "address": "St. Anthony's Church, Mount Lavinia", "region": "Colombo", "lang": "English & Sinhala", "online": false, "phone": "+94 77 3099 844", "whatsapp": false}, {"slug": "colombo-online-monday", "name": "Colombo Online", "day": 1, "time": "18:30", "end_time": "19:30", "location": "Zoom", "address": "", "region": "Online", "lang": "English", "online": true, "phone": "+94 77 301 7690", "whatsapp": false}, {"slug": "colombo-online-wednesday", "name": "Colombo Online", "day": 3, "time": "18:30", "end_time": "19:30", "location": "Zoom", "address": "", "region": "Online", "lang": "English", "online": true, "phone": "+94 77 301 7690", "whatsapp": false}, {"slug": "colombo-online-friday", "name": "Colombo Online", "day": 5, "time": "18:30", "end_time": "19:30", "location": "Zoom", "address": "", "region": "Online", "lang": "English", "online": true, "phone": "+94 77 301 7690", "whatsapp": false}, {"slug": "colombo-7-friday", "name": "Colombo 7 Friday", "day": 5, "time": "17:00", "end_time": "18:30", "location": "Cinnamon Gardens Baptist Church", "address": "Cinnamon Gardens Baptist Church, Lipton Circus, Colombo 00700", "region": "Colombo", "lang": "English & Sinhala", "online": false, "phone": "+94 72 344 4594", "whatsapp": false}, {"slug": "colombo-15-tuesday", "name": "Colombo 15 Tuesday", "day": 2, "time": "18:30", "end_time": "19:30", "location": "Mithuru Nivesa", "address": "Mithuru Nivesa, Aluthmawatha Road, Colombo 01500", "region": "Colombo", "lang": "English & Sinhala", "online": false, "phone": "+94 72 786 0860", "whatsapp": false}, {"slug": "batticaloa-monday", "name": "Batticaloa Daily", "day": 1, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-tuesday", "name": "Batticaloa Daily", "day": 2, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-wednesday", "name": "Batticaloa Daily", "day": 3, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-thursday", "name": "Batticaloa Daily", "day": 4, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-friday", "name": "Batticaloa Daily", "day": 5, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-saturday", "name": "Batticaloa Daily", "day": 6, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "batticaloa-sunday", "name": "Batticaloa Daily", "day": 0, "time": "17:00", "end_time": "18:00", "location": "Vimochana Center", "address": "Vimochana Center, Batticaloa", "region": "Batticaloa", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 668 4671", "whatsapp": false}, {"slug": "galle-thursday", "name": "Galle Thursday", "day": 4, "time": "19:00", "end_time": "20:00", "location": "Caritas SED Galle Centre", "address": "Caritas SED Galle Centre, Mt. Calvary, Kaluwella, Galle", "region": "Galle", "lang": "English", "online": false, "phone": "+94 74 363 0051", "whatsapp": true}, {"slug": "delathura-monday", "name": "Delathura Monday", "day": 1, "time": "18:30", "end_time": "19:30", "location": "The Turning Point", "address": "The Turning Point, Delathura, Gampaha", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 786 0868", "whatsapp": false}, {"slug": "delathura-tuesday", "name": "Delathura Tuesday", "day": 2, "time": "18:30", "end_time": "19:30", "location": "The Turning Point", "address": "The Turning Point, Delathura, Gampaha", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 786 0868", "whatsapp": false}, {"slug": "delathura-thursday", "name": "Delathura Thursday", "day": 4, "time": "18:30", "end_time": "19:30", "location": "The Turning Point", "address": "The Turning Point, Delathura, Gampaha", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 786 0868", "whatsapp": false}, {"slug": "nittambuwa-monday", "name": "Nittambuwa Monday", "day": 1, "time": "17:30", "end_time": "18:30", "location": "Siri Mathikaramaya Temple", "address": "Siri Mathikaramaya Temple, Habidyawa, Nittambuwa", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 890 8844", "whatsapp": false}, {"slug": "kerawalapitiya-saturday", "name": "Kerawalapitiya Saturday", "day": 6, "time": "18:30", "end_time": "19:30", "location": "Baptist Church", "address": "Baptist Church, Kerawalapitiya", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 71 726 7403", "whatsapp": false}, {"slug": "mahabage-sunday", "name": "Mahabage Sunday", "day": 0, "time": "16:00", "end_time": "17:00", "location": "12 St. Mary's Road", "address": "12 St. Mary's Road, Mahabage, Ragama", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 11 295 8305", "whatsapp": false}, {"slug": "wattala-sunday", "name": "Wattala Sunday", "day": 0, "time": "18:30", "end_time": "19:30", "location": "Hemas Hospital", "address": "Hemas Hospital, Wattala", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 499 4475", "whatsapp": false}, {"slug": "hunupitiya-wednesday", "name": "Hunupitiya Wednesday", "day": 3, "time": "18:30", "end_time": "19:30", "location": "4 Wewaladuwa Road", "address": "4 Wewaladuwa Road, Hunupitiya, Wattala", "region": "Gampaha", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 786 0860", "whatsapp": false}, {"slug": "kalutara-sunday", "name": "Kalutara Sunday", "day": 0, "time": "10:00", "end_time": "11:00", "location": "Holy Cross Church", "address": "Holy Cross Church, Kalutara", "region": "Kalutara", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 301 9494", "whatsapp": false}, {"slug": "mannar-sunday", "name": "Mannar Sunday", "day": 0, "time": "16:30", "end_time": "17:30", "location": "Scrada, Thiripumuni", "address": "Scrada Thiripumuni, Thotaweli, Mannar", "region": "Mannar", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 23 323 1142", "whatsapp": false}, {"slug": "hiriketiya-sunday", "name": "Hiriketiya Sunday", "day": 0, "time": "17:00", "end_time": "18:00", "location": "Gaia Soul Guesthouse", "address": "122 Kaluketiya Watta Road, Hiriketiya, Dickwella", "region": "Matara", "lang": "English", "online": false, "phone": "+94 74 366 2785", "whatsapp": true}, {"slug": "ulhitiyawa-saturday", "name": "Ulhitiyawa Saturday", "day": 6, "time": "18:30", "end_time": "19:30", "location": "St. Francis Xavier's Church", "address": "St. Francis Xavier's Church, Ulhitiyawa", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 71 810 8536", "whatsapp": false}, {"slug": "deduru-oya-sunday", "name": "Deduru Oya Sunday", "day": 0, "time": "10:00", "end_time": "11:00", "location": "St. Jude's Church", "address": "St. Jude's Church, Deduru Oya", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 623 4951", "whatsapp": false}, {"slug": "katuneriya-sunday-morning", "name": "Katuneriya Sunday Morning", "day": 0, "time": "09:00", "end_time": "10:00", "location": "St. Jude's Church", "address": "St. Jude's Church, Katuneriya", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 77 719 1490", "whatsapp": false}, {"slug": "katuneriya-sunday-afternoon", "name": "Katuneriya Sunday Afternoon", "day": 0, "time": "16:00", "end_time": "17:00", "location": "St. Anthony's Church", "address": "St. Anthony's Church, Katuneriya", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 71 810 8536", "whatsapp": false}, {"slug": "wanathavilluwa-sunday", "name": "Wanathavilluwa Sunday", "day": 0, "time": "11:00", "end_time": "12:00", "location": "Serakkuliya Church", "address": "Serakkuliya Church, Wanathavilluwa", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 72 786 0868", "whatsapp": false}, {"slug": "bolawatte-wednesday", "name": "Bolawatte Wednesday", "day": 3, "time": "16:00", "end_time": "17:00", "location": "Bolawatte Junction", "address": "Bolawatte Junction, opposite Bank of Ceylon, Bolawatte", "region": "Puttalam", "lang": "Sinhala / Tamil", "online": false, "phone": "+94 71 810 8536", "whatsapp": false}];
+const T={
+  en:{days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],short:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    allweek:'All week',today:'Today',tomorrow:'Tomorrow',any:'Any',en:'English',si:'Sinhala / Tamil',inperson:'In person',online:'Online',
+    alld:'All districts',to:'to',onnow:'On now',startsIn:(h,m)=>`Starts in ${h?h+' h ':''}${m} min`,
+    zoomWhere:'Online on Zoom · call for the meeting details',call:'Call',copy:'Copy',copied:'Copied',
+    count:n=>`${n} meeting${n===1?'':'s'} shown`,
+    empty:'No meetings match these filters. Try another day, or choose "Online": the Zoom meeting is open to anyone in Sri Lanka.',
+    next:'Next meeting',todayAt:'Today at',tomorrowAt:'Tomorrow at',at:'at',seeWeek:"See this week's meetings →",zoom:'Online on Zoom',
+    lang:{'English':'English','English & Sinhala':'English & Sinhala','Sinhala / Tamil':'Sinhala / Tamil'},region:r=>r,
+    ampm:h=>h>=12?'pm':'am'},
+  si:{days:['ඉරිදා','සඳුදා','අඟහරුවාදා','බදාදා','බ්‍රහස්පතින්දා','සිකුරාදා','සෙනසුරාදා'],short:['ඉරි','සඳු','අඟ','බදා','බ්‍රහ','සිකු','සෙන'],
+    allweek:'මුළු සතියම',today:'අද',tomorrow:'හෙට',any:'ඕනෑම',en:'ඉංග්‍රීසි',si:'සිංහල / දෙමළ',inperson:'පුද්ගලිකව',online:'අන්තර්ජාලයෙන්',
+    alld:'සියලු දිස්ත්‍රික්ක',to:'දක්වා',onnow:'දැන් පැවැත්වෙනවා',startsIn:(h,m)=>`තව ${h?'පැය '+h+' ':''}මිනිත්තු ${m}කින්`,
+    zoomWhere:'Zoom හරහා අන්තර්ජාලයෙන් · රැස්වීම් විස්තර සඳහා අමතන්න',call:'අමතන්න',copy:'පිටපත් කරන්න',copied:'පිටපත් විය',
+    count:n=>`රැස්වීම් ${n}ක් පෙන්වයි`,
+    empty:'මෙම තේරීම්වලට ගැළපෙන රැස්වීම් නැහැ. වෙනත් දිනයක් තෝරන්න, නැත්නම් "අන්තර්ජාලයෙන්" තෝරන්න: Zoom රැස්වීමට ශ්‍රී ලංකාවේ ඕනෑම කෙනෙකුට සහභාගී වෙන්න පුළුවන්.',
+    next:'ඊළඟ රැස්වීම',todayAt:'අද',tomorrowAt:'හෙට',at:'',seeWeek:'මේ සතියේ රැස්වීම් බලන්න →',zoom:'Zoom හරහා අන්තර්ජාලයෙන්',
+    lang:{'English':'ඉංග්‍රීසි','English & Sinhala':'ඉංග්‍රීසි සහ සිංහල','Sinhala / Tamil':'සිංහල / දෙමළ'},
+    region:r=>({Colombo:'කොළඹ',Gampaha:'ගම්පහ',Galle:'ගාල්ල',Kalutara:'කළුතර',Matara:'මාතර',Puttalam:'පුත්තලම',Batticaloa:'මඩකලපුව',Mannar:'මන්නාරම',Online:'අන්තර්ජාලය'})[r]||r,
+    ampm:h=>h>=12?'ප.ව.':'පෙ.ව.'},
+  ta:{days:['ஞாயிறு','திங்கள்','செவ்வாய்','புதன்','வியாழன்','வெள்ளி','சனி'],short:['ஞாயி','திங்','செவ்','புத','வியா','வெள்','சனி'],
+    allweek:'முழு வாரம்',today:'இன்று',tomorrow:'நாளை',any:'எதுவும்',en:'ஆங்கிலம்',si:'சிங்களம் / தமிழ்',inperson:'நேரில்',online:'இணையத்தில்',
+    alld:'அனைத்து மாவட்டங்களும்',to:'வரை',onnow:'இப்போது நடைபெறுகிறது',startsIn:(h,m)=>`இன்னும் ${h?h+' மணி ':''}${m} நிமிடத்தில்`,
+    zoomWhere:'Zoom வழியாக இணையத்தில் · கூட்ட விபரங்களுக்கு அழையுங்கள்',call:'அழையுங்கள்',copy:'நகலெடுக்க',copied:'நகலெடுக்கப்பட்டது',
+    count:n=>`${n} கூட்டங்கள் காட்டப்படுகின்றன`,
+    empty:'இந்தத் தெரிவுகளுக்குப் பொருந்தும் கூட்டங்கள் இல்லை. வேறு நாளைத் தெரிவுசெய்யுங்கள், அல்லது "இணையத்தில்" என்பதைத் தெரிவுசெய்யுங்கள்: Zoom கூட்டத்தில் இலங்கையிலுள்ள எவரும் கலந்துகொள்ளலாம்.',
+    next:'அடுத்த கூட்டம்',todayAt:'இன்று',tomorrowAt:'நாளை',at:'',seeWeek:'இந்த வாரக் கூட்டங்களைப் பாருங்கள் →',zoom:'Zoom வழியாக இணையத்தில்',
+    lang:{'English':'ஆங்கிலம்','English & Sinhala':'ஆங்கிலம் மற்றும் சிங்களம்','Sinhala / Tamil':'சிங்களம் / தமிழ்'},
+    region:r=>({Colombo:'கொழும்பு',Gampaha:'கம்பஹா',Galle:'காலி',Kalutara:'களுத்துறை',Matara:'மாத்தறை',Puttalam:'புத்தளம்',Batticaloa:'மட்டக்களப்பு',Mannar:'மன்னார்',Online:'இணையம்'})[r]||r,
+    ampm:h=>h>=12?'பி.ப.':'மு.ப.'}
+};
+let LANG='en';
+try{const s=localStorage.getItem('aa-lang');if(s==='si'||s==='en'||s==='ta')LANG=s}catch(e){}
+const t=()=>T[LANG];
+const pad=n=>String(n).padStart(2,'0');
+function nowLK(){const d=new Date(Date.now()+(330+new Date().getTimezoneOffset())*60000);return{day:d.getDay(),min:d.getHours()*60+d.getMinutes()}}
+const toMin=s=>{const[h,m]=s.split(':').map(Number);return h*60+m};
+const fmt=s=>{let[h,m]=s.split(':').map(Number);const ap=t().ampm(h);h=h%12||12;return LANG!=='en'?`${ap} ${h}:${pad(m)}`:`${h}:${pad(m)} ${ap}`};
+const state={day:'all',region:'all',lang:'all',fmt:'all'};
+
+function chips(el,opts,key){
+  el.innerHTML='';
+  opts.forEach(([v,l])=>{const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=l;b.setAttribute('aria-pressed',state[key]===v);
+    b.onclick=()=>{state[key]=v;render()};el.appendChild(b)});
+}
+function setupRegions(){
+  const regions=[...new Set(MEETINGS.map(m=>m.region))].filter(r=>r!=='Online').sort();
+  const sel=document.getElementById('f-region');
+  sel.innerHTML=`<option value="all">${t().alld}</option>`+regions.map(r=>`<option value="${r}">${t().region(r)}</option>`).join('');
+  sel.value=state.region;
+  sel.onchange=()=>{state.region=sel.value;render()};
+}
+function matches(m){
+  if(state.region!=='all'&&m.region!==state.region)return false;
+  if(state.lang==='en'&&!m.lang.includes('English'))return false;
+  if(state.lang==='si'&&!(m.lang.includes('Sinhala')||m.lang.includes('Tamil')))return false;
+  if(state.fmt==='inperson'&&m.online)return false;
+  if(state.fmt==='online'&&!m.online)return false;
+  return true;
+}
+function status(m,n){
+  if(m.day!==n.day)return '';
+  const s=toMin(m.time),e=toMin(m.end_time);
+  if(n.min>=s&&n.min<e)return `<span class="tag now">${t().onnow}</span>`;
+  if(s>n.min&&s-n.min<=180){const d=s-n.min;return `<span class="tag now">${t().startsIn(Math.floor(d/60),d%60)}</span>`}
+  return '';
+}
+function card(m,n){
+  const where=m.online?t().zoomWhere:`${m.location}, ${m.address.split(', ').slice(1).join(', ')||m.address}`;
+  const endTxt=LANG!=='en'?`${fmt(m.end_time)} ${t().to}`:`${t().to} ${fmt(m.end_time)}`;
+  return `<article class="mtg"><div class="time">${fmt(m.time)}<small>${endTxt}</small></div>
+  <div class="body"><span class="name" lang="en">${m.name}</span><span class="where" lang="en">${where}</span>
+  <div class="tags">${status(m,n)}<span class="tag">${t().lang[m.lang]||m.lang}</span>${m.online?'<span class="tag zoom">Zoom</span>':''}</div>
+  ${m.phone?`<span class="call">${m.whatsapp?'WhatsApp':t().call} <b>${m.phone}</b> <button class="copy" type="button" data-copy="${m.phone}" data-label-en="Copy" data-label-si="පිටපත් කරන්න" data-label-ta="நகலெடுக்க">${t().copy}</button></span>`:''}</div></article>`;
+}
+function render(){
+  const n=nowLK(),L=t();
+  chips(document.getElementById('f-day'),[['all',L.allweek],['today',L.today],...[1,2,3,4,5,6,0].map(d=>[String(d),L.short[d]])],'day');
+  chips(document.getElementById('f-lang'),[['all',L.any],['en',L.en],['si',L.si]],'lang');
+  chips(document.getElementById('f-fmt'),[['all',L.any],['inperson',L.inperson],['online',L.online]],'fmt');
+  const days=state.day==='all'?[0,1,2,3,4,5,6].map(i=>(n.day+i)%7):[state.day==='today'?n.day:Number(state.day)];
+  let html='',total=0;
+  days.forEach(d=>{
+    const ms=MEETINGS.filter(m=>m.day===d&&matches(m)).sort((a,b)=>a.time.localeCompare(b.time));
+    if(!ms.length)return; total+=ms.length;
+    const label=d===n.day?L.today:(d===(n.day+1)%7?L.tomorrow:'');
+    html+=`<div class="daygroup"><div class="dayhead"><h3>${L.days[d]}</h3>${label?`<span>${label}</span>`:''}</div>${ms.map(m=>card(m,n)).join('')}</div>`;
+  });
+  document.getElementById('list').innerHTML=html||`<div class="empty">${L.empty}</div>`;
+  document.getElementById('count').textContent=L.count(total);
+  renderNext(n);
+}
+function renderNext(n){
+  const L=t(),up=[];
+  for(let i=0;i<7;i++){const d=(n.day+i)%7;MEETINGS.filter(m=>m.day===d&&(i>0||toMin(m.end_time)>n.min)).sort((a,b)=>a.time.localeCompare(b.time)).forEach(m=>up.push([i,m]))}
+  const [i,m]=up[0]||[];if(!m)return;
+  let when;
+  if(i===0&&toMin(m.time)<=n.min)when=L.onnow;
+  else if(i===0)when=`${L.todayAt} ${fmt(m.time)}`;
+  else if(i===1)when=`${L.tomorrowAt} ${fmt(m.time)}`;
+  else when=`${L.days[m.day]} ${L.at} ${fmt(m.time)}`.replace('  ',' ');
+  document.getElementById('next').innerHTML=`<span class="muted">${L.next}</span><b class="big-sm">${when} · <span lang="en">${m.name}</span></b><span>${m.online?L.zoom:m.location+', '+L.region(m.region)} · ${L.lang[m.lang]||m.lang}</span><a href="#meetings">${L.seeWeek}</a>`;
+}
+function labelCopies(){document.querySelectorAll('[data-copy]').forEach(b=>{const l=b.dataset['label'+LANG[0].toUpperCase()+LANG[1]];if(l)b.textContent=l})}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;
+  const txt=b.dataset.copy,old=b.textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{b.textContent=t().copied;setTimeout(()=>b.textContent=old,1500)}).catch(()=>{b.textContent=txt});});
+function setLang(l){
+  LANG=l;document.documentElement.setAttribute('data-lang',l);document.documentElement.lang=l;
+  try{localStorage.setItem('aa-lang',l)}catch(e){}
+  document.querySelectorAll('[data-setlang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.setlang===l));
+  setupRegions();render();labelCopies();
+}
+document.querySelectorAll('[data-setlang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.setlang)));
+const VIEWS=['home','meetings','first-meeting','families','contact'];
+function route(){const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'home';
+  VIEWS.forEach(x=>document.getElementById('v-'+x).hidden=x!==v);
+  document.querySelectorAll('nav a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+v?'page':'false'));
+  window.scrollTo(0,0);}
+window.addEventListener('hashchange',route);
+setLang(LANG);route();
+</script>
+
+</body>
+</html>
