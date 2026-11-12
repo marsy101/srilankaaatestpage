@@ -119,7 +119,26 @@ header.site .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-tem
 header.site .brand{grid-area:brand}
 header.site nav{grid-area:nav;min-width:0}
 header.site .langsw{grid-area:lang;align-self:start}
-@media (max-width:700px){header.site .wrap{grid-template-areas:"brand lang" "nav nav"}header.site .langsw{align-self:center}.langsw button{padding:6px 10px;font-size:.88rem}}
+.brand b,.brand span{white-space:nowrap}
+.bounce{display:inline-block;animation:nudge 5s ease-in-out 2s infinite}
+[aria-current="page"] .bounce{animation:none}
+@keyframes nudge{0%,14%,100%{transform:translateY(0)}4%{transform:translateY(-7px)}8%{transform:translateY(0)}11%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.bounce{animation:none}}
+.tabbar{display:none}
+@media (max-width:700px){
+  header.site .wrap{grid-template-columns:minmax(0,1fr);grid-template-areas:"brand" "lang";padding-block:14px 12px;gap:12px}
+  header.site nav{display:none}
+  .brand b{font-size:1.25rem}
+  .brand span{font-size:.8rem}
+  header.site .langsw{width:100%}
+  .langsw button{flex:1;padding:8px 6px;font-size:.92rem}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(22,38,42,.06);padding:6px max(4px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(4px,env(safe-area-inset-right,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border-radius:10px;text-decoration:none;color:var(--muted);font-size:.72rem;line-height:1.2;text-align:center;min-width:0}
+  .tabbar a span[data-l]{overflow-wrap:anywhere}
+  .tabbar svg{width:22px;height:22px;flex:none}
+  .tabbar a[aria-current="page"]{color:var(--accent);background:var(--accent-soft);font-weight:700}
+}
 /* bilingual */
 html:not([data-lang="si"]) [data-l="si"], html:not([data-lang="ta"]) [data-l="ta"], html:not([data-lang="en"]) [data-l="en"]{display:none!important}
 html[data-lang="ta"] body{font-family:"Noto Sans Tamil", var(--f-body);line-height:1.75}
@@ -163,7 +182,7 @@ html[data-lang="si"] .big-sm{font-family:"Noto Sans Sinhala", var(--f-display)}
   <a class="brand" href="#home"><b>AA Sri Lanka</b><span>Alcoholics Anonymous · The Turning Point</span></a>
   <nav aria-label="Main">
     <a href="#home"><span data-l="en">Home</span><span data-l="si">මුල් පිටුව</span><span data-l="ta">முகப்பு</span></a>
-    <a href="#meetings"><span data-l="en">Meetings</span><span data-l="si">රැස්වීම්</span><span data-l="ta">கூட்டங்கள்</span></a>
+    <a href="#meetings"><span class="bounce"><span data-l="en">Meetings</span><span data-l="si">රැස්වීම්</span><span data-l="ta">கூட்டங்கள்</span></span></a>
     <a href="#first-meeting"><span data-l="en">First meeting</span><span data-l="si">පළමු රැස්වීම</span><span data-l="ta">முதல் கூட்டம்</span></a>
     <a href="#families"><span data-l="en">Families</span><span data-l="si">පවුල් සඳහා</span><span data-l="ta">குடும்பங்களுக்கு</span></a>
     <a href="#contact"><span data-l="en">Contact</span><span data-l="si">අප අමතන්න</span><span data-l="ta">தொடர்புகொள்ள</span></a>
@@ -466,6 +485,7 @@ html[data-lang="si"] .big-sm{font-family:"Noto Sans Sinhala", var(--f-display)}
   <span data-l="en">Links marked ↗ go to other websites. We don't control their content, and linking to a site outside AA doesn't mean AA endorses it.</span>
   <span data-l="si">↗ ලකුණ සහිත සබැඳි වෙනත් වෙබ් අඩවි වෙත යනවා. ඒවායේ අන්තර්ගතය අප පාලනය කරන්නේ නැහැ, AA ට පිටතින් ඇති වෙබ් අඩවියකට සබැඳීම AA එය අනුමත කරන බවක් අදහස් කරන්නේ නැහැ.</span><span data-l="ta">↗ குறியுள்ள இணைப்புகள் வேறு இணையத்தளங்களுக்குச் செல்லும். அவற்றின் உள்ளடக்கத்தை நாங்கள் கட்டுப்படுத்துவதில்லை; AA க்கு வெளியேயுள்ள தளத்துடன் இணைப்பது AA அதை அங்கீகரிக்கிறது என்று பொருள்படாது.</span>
 </div></footer>
+<nav class="tabbar" aria-label="Main (mobile)"><a href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span data-l="en">Home</span><span data-l="si">මුල් පිටුව</span><span data-l="ta">முகப்பு</span></a><a href="#meetings"><span class="bounce" style="display:flex;flex-direction:column;align-items:center;gap:3px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span data-l="en">Meetings</span><span data-l="si">රැස්වීම්</span><span data-l="ta">கூட்டங்கள்</span></span></a><a href="#first-meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span data-l="en">First visit</span><span data-l="si">පළමු වතාව</span><span data-l="ta">முதல் முறை</span></a><a href="#families"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3.5 20c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5M14.5 15c2.8-.6 6 1 6 4.5"/></svg><span data-l="en">Families</span><span data-l="si">පවුල්</span><span data-l="ta">குடும்பம்</span></a><a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span data-l="en">Contact</span><span data-l="si">අමතන්න</span><span data-l="ta">தொடர்பு</span></a></nav>
 
 <script>
 // In production this array is replaced by fetch(FEED_URL): the JSON feed generated from the fellowship's Google Sheet.
